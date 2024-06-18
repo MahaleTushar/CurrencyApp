@@ -59,6 +59,8 @@ kotlin {
 
             implementation(libs.multiplatform.settings.arg.less)
             implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.mondodb.realm)
+            implementation(libs.stately.common)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

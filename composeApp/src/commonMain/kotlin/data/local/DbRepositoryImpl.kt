@@ -3,18 +3,37 @@ package data.local
 import domain.DbRepository
 import domain.model.Currency
 import domain.model.RequestState
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
+import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
-class DbRepositoryImpl:DbRepository {
+class DbRepositoryImpl : DbRepository {
+    private var realm: Realm? = null
+
+    init {
+        configureTheRealm()
+    }
+
     override fun configureTheRealm() {
-        TODO("Not yet implemented")
+        if (realm == null || realm!!.isClosed()) {
+            val config = RealmConfiguration.Builder(schema = setOf(Currency::class))
+                .compactOnLaunch()
+                .build()
+
+            realm = Realm.open(config)
+        }
     }
 
     override suspend fun insertCurrencyData(currency: Currency) {
-        TODO("Not yet implemented")
+        realm?.write { copyToRealm(currency) }
     }
 
     override fun reaCurrencyData(): Flow<RequestState<List<Currency>>> {
-        TODO("Not yet implemented")
+        return realm?.query<Currency>()?.asFlow()
+            ?.map { result -> RequestState.Success(data = result.list) }
+            ?: flow { RequestState.Error("Realm not configured") }
     }
 }

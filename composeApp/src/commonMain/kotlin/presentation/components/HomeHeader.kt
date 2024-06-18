@@ -139,13 +139,20 @@ fun CurrencyInputs(
             onClick = {})
         Spacer(modifier = Modifier.height(14.dp))
 
-        IconButton(modifier = Modifier.padding(top = 24.dp), onClick = onSwitchClick) {
-            Icon(
-                painter = painterResource(Res.drawable.baseline_refresh),
-                contentDescription = "Switch icon",
-                tint = Color.White
-            )
-        }
+        Icon(
+            modifier = Modifier.size(24.dp).clickable {
+                onSwitchClick()
+            },
+            painter = painterResource(Res.drawable.baseline_refresh),
+            tint = Color.Unspecified,
+            contentDescription = "Country flag"
+        )
+//        IconButton(modifier = Modifier.padding(top = 24.dp), onClick = onSwitchClick) {
+//            Icon(
+//                painter = painterResource(Res.drawable.baseline_refresh),
+//                contentDescription = "Switch icon",
+//            )
+//        }
         Spacer(modifier = Modifier.height(14.dp))
         CurrencyView("from",
             currency = source,

@@ -7,6 +7,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.core.model.screenModelScope
 import domain.CurrencyApiService
+import domain.DbRepository
 import domain.PreferencesRepository
 import domain.model.Currency
 import domain.model.RateStatus
@@ -20,7 +21,8 @@ sealed class HomeUiEvent {
 }
 
 class HomeViewModel(
-    private val preferences: PreferencesRepository, private val api: CurrencyApiService
+    private val preferences: PreferencesRepository, private val api: CurrencyApiService,
+    private val dbRepository: DbRepository
 ) : ScreenModel {
     private var _rateStatus: MutableState<RateStatus> = mutableStateOf(RateStatus.Idle)
     val rateStatus: State<RateStatus> get() = _rateStatus

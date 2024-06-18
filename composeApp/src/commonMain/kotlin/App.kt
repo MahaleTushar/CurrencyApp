@@ -12,11 +12,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import currencyapp.composeapp.generated.resources.Res
 import currencyapp.composeapp.generated.resources.compose_multiplatform
+import di.initializeKoin
 import presentation.screeen.HomeScreen
 
 @Composable
 @Preview
 fun App() {
+    initializeKoin()
     MaterialTheme {
         Navigator(HomeScreen())
     }
